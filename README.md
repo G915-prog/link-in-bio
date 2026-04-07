@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.8.0 — 2026-04-07
+- Built out `QRCode.jsx` — generates QR code onto a canvas via the `qrcode` package, with a Download PNG button
+- Updated `ProfilePage.jsx` — passes `profile.username` (from DB) to QRCode instead of the URL param
+
 ### 0.7.4 — 2026-04-07
 - `LinkItem.jsx` — removed temporary debug logging; click tracking confirmed working
 

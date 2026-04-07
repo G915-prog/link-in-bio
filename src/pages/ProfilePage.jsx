@@ -42,7 +42,7 @@ function ProfilePage() {
 
       {!linksLoading && <LinkList links={links} />}
 
-      <QRCode url={`${window.location.origin}/profile/${username}`} />
+      <QRCode url={`${window.location.origin}/profile/${profile.username}`} />
     </main>
   )
 }
