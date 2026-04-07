@@ -4,6 +4,20 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.2.0 — 2026-04-07
+- **Themes**: Replaced 5 placeholder color swaps with fully distinct visual identities — each theme has its own font, shape language, background treatment, layout character, and animation style
+  - `default` → **Paper** — Lora + Cormorant Garamond serif, warm parchment `#f7f3ed`, radial gradient depth, italic display name, soft fade-up entrance
+  - `dark` → **Terminal** — Space Mono monospace, phosphor green `#00ff41` on near-black, CRT scanline background, left-aligned CLI layout (`> name`, `// bio`, `$ link` prefixes), zero border-radius, slide-left stagger
+  - `forest` → **Brutalist** — Space Grotesk heavy, off-white `#f0ede8`, stark black `2px` borders with `4px` offset box-shadows, uppercase everything, no animations
+  - `ocean` → **Velvet** — Cormorant Garamond italic, deep purple-black `#120a1e`, warm gold `#c9a96e`, vignette radial background, glassmorphism link cards, slow fade-in entrance
+  - `rose` → **Vapor** — Outfit geometric, deep synthwave purple `#1a0533`, pink→cyan gradient text title, CSS gradient-border link cards (padding-box/border-box technique), grid background, glow hover
+- **Architecture**: Switched `ThemeContext` from JS inline CSS var injection to `data-theme` attribute on `<html>` — all visual logic lives in the stylesheet, no competing inline styles
+- **Architecture**: Theme application is now profile-exclusive — `Dashboard` resets to `default` on mount; themes only apply when visiting a public profile
+- **ThemePicker**: Redesigned from plain color swatches to self-contained mini preview cards — each card renders in its own aesthetic (font, color, border style, mini link preview) so the identity is immediately legible
+- **ProfileEditor**: Removed live global `setTheme()` call from theme selection — theme is saved to profile and applied on the public profile page only
+- **Google Fonts**: Added `<link>` preconnect + stylesheet in `index.html` for Lora, Cormorant Garamond, Space Mono, Space Grotesk, Outfit
+- **Animations**: Per-theme entrance choreography with `animation-delay` stagger on link items — Paper (fade-up spring), Terminal (slide-left fast), Brutalist (none), Velvet (slow fade), Vapor (fade-up spring)
+
 ### 2.1.0 — 2026-04-07
 - **Security**: Added `src/lib/url.js` — `isSafeUrl` + `sanitizeUrl` helpers; blocks `javascript:` and non-HTTP(S) URL schemes
 - **Security**: `useLinks` — validates URL scheme in `addLink` and `updateLink` before any DB write; rejects with user-facing error if invalid

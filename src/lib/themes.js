@@ -1,9 +1,9 @@
 export const THEMES = {
-  default: { bg: '#ffffff', text: '#111111', accent: '#c84b2f' },
-  dark:    { bg: '#111111', text: '#f5f5f5', accent: '#e87c5e' },
-  forest:  { bg: '#1a2e1a', text: '#d4edda', accent: '#52b788' },
-  ocean:   { bg: '#0a1628', text: '#caf0f8', accent: '#48cae4' },
-  rose:    { bg: '#fff0f3', text: '#3d0017', accent: '#e63362' },
+  default: { name: 'Paper',    bg: '#f7f3ed', text: '#1c1410', accent: '#bf4e30' },
+  dark:    { name: 'Terminal', bg: '#0a0a0a', text: '#a3bba3', accent: '#00ff41' },
+  forest:  { name: 'Brutalist',bg: '#f0ede8', text: '#0a0a0a', accent: '#ff2d00' },
+  ocean:   { name: 'Velvet',   bg: '#120a1e', text: '#e8ddd0', accent: '#c9a96e' },
+  rose:    { name: 'Vapor',    bg: '#1a0533', text: '#e0d7f5', accent: '#ff71ce' },
 }
 
 export const DEFAULT_THEME = THEMES.default

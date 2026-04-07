@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import { useLinks } from '../hooks/useLinks'
 import { supabase } from '../lib/supabase'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +10,12 @@ import StatsPanel from '../components/StatsPanel'
 
 function Dashboard() {
   const { user } = useAuth()
+  const { setTheme } = useTheme()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    setTheme('default')
+  }, [setTheme])
   const linksHook = useLinks(user?.id ?? null)
 
   async function handleSignOut() {

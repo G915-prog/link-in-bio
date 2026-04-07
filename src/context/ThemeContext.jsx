@@ -1,19 +1,22 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { THEMES, DEFAULT_THEME } from '../lib/themes'
 
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('default')
+  const [theme, setThemeState] = useState('default')
+
+  function setTheme(key) {
+    setThemeState(key ?? 'default')
+  }
 
   useEffect(() => {
-    const values = THEMES[theme] ?? DEFAULT_THEME
-    const root = document.documentElement
-    root.style.setProperty('--theme-bg', values.bg)
-    root.style.setProperty('--theme-text', values.text)
-    root.style.setProperty('--theme-accent', values.accent)
-    document.body.style.backgroundColor = values.bg
-    document.body.style.color = values.text
+    document.documentElement.setAttribute('data-theme', theme)
+    // Clear any inline styles set by the previous implementation
+    document.documentElement.style.removeProperty('--theme-bg')
+    document.documentElement.style.removeProperty('--theme-text')
+    document.documentElement.style.removeProperty('--theme-accent')
+    document.body.style.backgroundColor = ''
+    document.body.style.color = ''
   }, [theme])
 
   return (
