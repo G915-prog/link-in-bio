@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.5.0 — 2026-04-07
+- **Routing**: `/` now redirects to `/profile/:username` for logged-in users with a set username, to `/dashboard` if logged in but username not yet set, or to `/login` for unauthenticated visitors
+- **Nav**: Brand wordmark now links directly to the user's profile (or `/login` when signed out); "Home" link replaces the old "Profile" link pointing to the same destination; standalone "Home" and "Profile" links collapsed into one
+- **Removed**: `Home.jsx` page and `src/data/testProfiles.js` — test profile index no longer needed
+
 ### 2.4.0 — 2026-04-07
 - **Architecture**: `ThemeContext` — added `setUserTheme` (sets active theme + records it as the user's own preference via a stable ref) and `resetToUserTheme` (reverts to that preference); `setTheme` is now a temporary override only
 - **Nav**: calls `setUserTheme(profile.theme)` when the logged-in user's profile loads — this is now the single source of truth for global theme; no page resets to Paper on mount
