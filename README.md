@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.3.2 — 2026-04-07
+- **Fix**: Dashboard now permanently stays in Paper style — removed `setTheme()` call from `ProfileEditor.handleThemeChange`; ThemePicker still shows the saved selection via highlighted active card, theme applies on the public profile page only
+
 ### 2.3.1 — 2026-04-07
 - **Fix**: Button reset missing `color: inherit` — browsers apply UA `color: ButtonText` (black) to `<button>` elements, making Edit/Delete/Cancel buttons unreadable on dark themes (Terminal, Velvet, Vapor)
 
