@@ -1,12 +1,23 @@
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import { useOwnProfile } from '../hooks/useOwnProfile'
 
 function Nav() {
   const { user, loading } = useAuth()
   const { profile } = useOwnProfile(user?.id ?? null)
+  const { setUserTheme } = useTheme()
 
   const username = profile?.username ?? null
+
+  // Apply the logged-in user's saved theme as the global base theme.
+  // Runs once when the profile loads, and again if the saved theme changes.
+  useEffect(() => {
+    if (profile?.theme) {
+      setUserTheme(profile.theme)
+    }
+  }, [profile?.theme, setUserTheme])
 
   return (
     <nav className="nav">

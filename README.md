@@ -4,6 +4,14 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.4.0 — 2026-04-07
+- **Architecture**: `ThemeContext` — added `setUserTheme` (sets active theme + records it as the user's own preference via a stable ref) and `resetToUserTheme` (reverts to that preference); `setTheme` is now a temporary override only
+- **Nav**: calls `setUserTheme(profile.theme)` when the logged-in user's profile loads — this is now the single source of truth for global theme; no page resets to Paper on mount
+- **ProfileHeader**: uses `setTheme` (temporary override) on mount and `resetToUserTheme` on unmount — visiting a public profile applies that profile's theme, navigating away restores the viewer's own theme
+- **ProfileEditor**: `handleThemeChange` now calls `setUserTheme` so the live preview also updates the user's preference reference, not just the display
+- **Dashboard**: removed `setTheme('default')` reset on mount
+- **Home**: removed `setTheme('default')` reset on mount
+
 ### 2.3.2 — 2026-04-07
 - **Fix**: `ProfileEditor` — restored `setTheme(key)` in `handleThemeChange` so clicking a theme card gives a live full-page preview; Dashboard's `useEffect` still resets to Paper on mount so navigating back always returns to the default style
 - **Fix**: `Home` — added `useEffect(() => setTheme('default'))` so the home page always resets to Paper instead of inheriting stale theme from prior navigation

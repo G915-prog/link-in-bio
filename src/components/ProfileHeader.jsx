@@ -3,11 +3,12 @@ import { useTheme } from '../context/ThemeContext'
 
 function ProfileHeader({ profile }) {
   const { display_name, bio, avatar_url, theme } = profile
-  const { setTheme } = useTheme()
+  const { setTheme, resetToUserTheme } = useTheme()
 
   useEffect(() => {
     setTheme(theme ?? 'default')
-  }, [theme, setTheme])
+    return () => resetToUserTheme()
+  }, [theme, setTheme, resetToUserTheme])
 
   return (
     <div className="profile-header">
