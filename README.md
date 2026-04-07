@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.4.0 — 2026-04-07
+- Built out `ProfilePage.jsx` — fetches profile by username, fetches published links by `user_id`, loading/not-found states
+- Added placeholder `ProfileHeader.jsx` — renders `display_name` and `bio`
+- Added placeholder `QRCode.jsx` — renders a canvas element for future QR generation
+
 ### 0.3.5 — 2026-04-07
 - Added `public/favicon.svg` — custom chain-link icon on indigo background
 - Updated `index.html` to reference the new favicon (removes 404 on vite.svg)
