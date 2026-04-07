@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.3.0 — 2026-04-07
+- Added `src/hooks/useProfile.js` — custom hook to fetch a profile by username and upsert the authed user's own profile
+
 ### 0.2.0 — 2026-04-07
 - Added `src/components/Nav.jsx` — navigation menu with `NavLink`s to all pages
 - Rendered `<Nav />` globally in `App.jsx` above all routes
