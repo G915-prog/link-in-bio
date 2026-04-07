@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.3.1 — 2026-04-07
+- `ProfilePage.jsx` — imports `useProfile`, fetches by route username (falls back to `'testuser'`), logs profile to console on fetch
+
 ### 0.3.0 — 2026-04-07
 - Added `src/hooks/useProfile.js` — custom hook to fetch a profile by username and upsert the authed user's own profile
 
