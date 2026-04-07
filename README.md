@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.3.4 — 2026-04-07
+- `ProfilePage.jsx` — removed unauthenticated seed hack; test row should be inserted manually via Supabase Table Editor
+
 ### 0.3.3 — 2026-04-07
 - Added `vercel.json` — rewrites all routes to `index.html` so React Router handles client-side navigation (fixes 404 on direct URL access)
 
