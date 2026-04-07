@@ -10,6 +10,7 @@ function Dashboard() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('[Dashboard] getSession —', session ? `user: ${session.user.email}` : 'no session')
       if (!session) {
         navigate('/login')
       } else {
@@ -19,6 +20,7 @@ function Dashboard() {
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('[Dashboard] onAuthStateChange — event:', _event, '| session:', session ? session.user.email : 'null')
       if (!session) {
         navigate('/login')
       } else {

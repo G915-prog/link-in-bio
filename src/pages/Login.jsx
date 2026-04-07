@@ -15,9 +15,13 @@ function Login() {
     setError(null)
     setLoading(true)
 
-    const { error: authError } = isSignUp
+    console.log('[Login] calling', isSignUp ? 'signUp' : 'signInWithPassword')
+
+    const { data: authData, error: authError } = isSignUp
       ? await supabase.auth.signUp({ email, password })
       : await supabase.auth.signInWithPassword({ email, password })
+
+    console.log('[Login] auth response — error:', authError, '| session:', authData?.session?.access_token ? 'present' : 'absent')
 
     setLoading(false)
 
@@ -26,6 +30,7 @@ function Login() {
       return
     }
 
+    console.log('[Login] navigating to /dashboard')
     navigate('/dashboard')
   }
 
