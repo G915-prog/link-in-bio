@@ -1,34 +1,37 @@
 /**
  * useProfile
  *
- * Fetches a public profile by username and exposes an upsertProfile helper
- * for the authenticated user's own profile.
+ * Fetches a profile by username or by user ID, and exposes an upsertProfile
+ * helper for the authenticated user's own profile.
  *
- * @param {string|null} username - Public username to fetch. Pass null to skip
- *   the initial fetch (e.g. on the dashboard where the user upserts directly).
+ * @param {string|null} username  - Public username to fetch via WHERE username = :username.
+ *                                  Pass null to skip the username fetch.
+ * @param {object}      [options]
+ * @param {string|null} [options.fetchById] - Supabase user ID to fetch via WHERE id = :id.
+ *                                            Takes precedence over username when provided.
  * @returns {{ profile: object|null, loading: boolean, error: string|null, upsertProfile: Function }}
  */
 
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 
-export function useProfile(username = null) {
+export function useProfile(username = null, { fetchById = null } = {}) {
   const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(!!username)
+  const [loading, setLoading] = useState(!!(username || fetchById))
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!username) return
+    if (!username && !fetchById) return
 
     async function fetchProfile() {
       setLoading(true)
       setError(null)
 
-      const { data, error: fetchError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('username', username)
-        .single()
+      const query = fetchById
+        ? supabase.from('profiles').select('*').eq('id', fetchById).single()
+        : supabase.from('profiles').select('*').eq('username', username).single()
+
+      const { data, error: fetchError } = await query
 
       if (fetchError) {
         setError(fetchError.message)
@@ -40,7 +43,7 @@ export function useProfile(username = null) {
     }
 
     fetchProfile()
-  }, [username])
+  }, [username, fetchById])
 
   /**
    * Upserts the authenticated user's profile row.

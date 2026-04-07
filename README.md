@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.0 — 2026-04-07
+- Extended `useProfile` hook with `fetchById` option (SELECT by user ID)
+- Built `ProfileEditor.jsx` — controlled form for username, display name, bio, avatar URL, theme picker; username change warning; Saving/Saved/error states
+- Wired `ProfileEditor` into `Dashboard.jsx`
+
 ### 0.9.0 — 2026-04-07
 - Built `Dashboard.jsx` — checks session on mount, redirects to /login if none, shows user email, sign out button, and placeholder sections for ProfileEditor, LinkEditor, StatsPanel
 - Built `Login.jsx` — email/password form with sign in / sign up toggle, error display, redirects to /dashboard on success
