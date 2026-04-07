@@ -4,6 +4,16 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.3.0 — 2026-04-07
+- **Nav**: Full redesign — sticky frosted-glass bar (backdrop-filter blur), 62px height, `z-index: 100`
+- **Nav**: Brand wordmark `link·in·bio` on the left, link group on the right
+- **Nav**: Paper — Cormorant Garamond italic wordmark in terracotta; slide-in underline on active/hover links
+- **Nav**: Terminal — `> link·in·bio_` with CSS step-function blinking cursor; Space Mono links, green underline
+- **Nav**: Brutalist — Space Grotesk 700 all-caps wordmark; bold links, 2px red underline, no blur
+- **Nav**: Velvet — Cormorant Garamond italic 300 gold wordmark at 1.6rem; gold underline, warm link text
+- **Nav**: Vapor — Outfit 600 gradient wordmark (pink→purple→cyan via `background-clip: text`); gradient underline, pink glow on hover
+- **Nav**: Login CTA styled as a bordered pill that fills with accent on hover
+
 ### 2.2.2 — 2026-04-07
 - **Fix**: `ThemeContext` — `setTheme` was a plain function redeclared on every render; Dashboard's `useEffect([setTheme])` detected the new reference after every theme change and immediately re-called `setTheme('default')`, creating an infinite render loop (epileptic flash, live preview impossible). Wrapped in `useCallback([])` to give it a stable identity.
 - **Fix**: `useOwnProfile.upsertProfile` — `data` was missing from Supabase destructuring; every save threw a `ReferenceError` and crashed React (blank page). Fixed with `.select().single()` and `setProfile(data)`.
