@@ -31,10 +31,10 @@ export function useOwnProfile(userId) {
     fetchProfile()
   }, [userId])
 
-  async function upsertProfile(data) {
+  async function upsertProfile({ username, display_name, bio, avatar_url, theme }) {
     const { error: upsertError } = await supabase
       .from('profiles')
-      .upsert({ id: userId, ...data, updated_at: new Date().toISOString() })
+      .upsert({ id: userId, username, display_name, bio, avatar_url, theme, updated_at: new Date().toISOString() })
 
     if (upsertError) {
       setError(upsertError.message)

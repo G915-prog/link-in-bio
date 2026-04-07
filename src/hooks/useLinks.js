@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import { isSafeUrl } from '../lib/url'
 
 export function useLinks(userId, { publishedOnly = false } = {}) {
   const [links, setLinks] = useState([])
@@ -47,6 +48,8 @@ export function useLinks(userId, { publishedOnly = false } = {}) {
   }, [userId])
 
   async function addLink({ title, url }) {
+    if (!isSafeUrl(url)) return { error: 'URL must start with http:// or https://' }
+
     const nextOrder = links.length > 0
       ? Math.max(...links.map(l => l.display_order ?? 0)) + 1
       : 0
@@ -80,6 +83,7 @@ export function useLinks(userId, { publishedOnly = false } = {}) {
       .from('links')
       .delete()
       .eq('id', id)
+      .eq('user_id', userId)
 
     if (deleteError) {
       setLinks(prev => {
@@ -93,15 +97,18 @@ export function useLinks(userId, { publishedOnly = false } = {}) {
     return { error: null }
   }
 
-  async function updateLink(id, changes) {
+  async function updateLink(id, { title, url }) {
+    if (!isSafeUrl(url)) return { error: 'URL must start with http:// or https://' }
+
     const previous = links.find(l => l.id === id)
 
-    setLinks(prev => prev.map(l => l.id === id ? { ...l, ...changes } : l))
+    setLinks(prev => prev.map(l => l.id === id ? { ...l, title, url } : l))
 
     const { error: updateError } = await supabase
       .from('links')
-      .update(changes)
+      .update({ title, url })
       .eq('id', id)
+      .eq('user_id', userId)
 
     if (updateError) {
       setLinks(prev => prev.map(l => l.id === id ? previous : l))

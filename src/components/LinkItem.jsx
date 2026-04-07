@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase'
+import { sanitizeUrl } from '../lib/url'
 
 function LinkItem({ link }) {
   async function handleClick() {
@@ -7,7 +8,7 @@ function LinkItem({ link }) {
 
   return (
     <a
-      href={link.url}
+      href={sanitizeUrl(link.url)}
       target="_blank"
       rel="noopener noreferrer"
       className="link-item"

@@ -4,6 +4,15 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.1.0 — 2026-04-07
+- **Security**: Added `src/lib/url.js` — `isSafeUrl` + `sanitizeUrl` helpers; blocks `javascript:` and non-HTTP(S) URL schemes
+- **Security**: `useLinks` — validates URL scheme in `addLink` and `updateLink` before any DB write; rejects with user-facing error if invalid
+- **Security**: `useLinks` — added `.eq('user_id', userId)` to `deleteLink` and `updateLink` queries (defense-in-depth alongside RLS)
+- **Security**: `useLinks` — `updateLink` now accepts and writes only `{ title, url }` (whitelisted fields, no arbitrary column spread)
+- **Security**: `LinkItem` — renders `sanitizeUrl(link.url)` as href; `javascript:` URLs in existing DB rows render as `#` instead of executing
+- **Security**: `useOwnProfile` — `upsertProfile` now destructures `{ username, display_name, bio, avatar_url, theme }` explicitly; removed unwhitelisted `...data` spread
+- **Security**: `vercel.json` — added HTTP security headers: `Content-Security-Policy` (restricts scripts, styles, connect, img, frames), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`
+
 ### 2.0.0 — 2026-04-07
 - **Architecture**: Added `AuthContext` (AuthProvider + useAuth) — auth state owned once at the top of the tree; no component fetches it independently
 - **Architecture**: Added `ThemeContext` (ThemeProvider + useTheme) — single theme owner with no competing unmount resets
