@@ -12,6 +12,19 @@ function ProfilePage() {
 
   const [links, setLinks] = useState([])
   const [linksLoading, setLinksLoading] = useState(false)
+  const [copyLabel, setCopyLabel] = useState('Share')
+
+  function handleShare() {
+    const url = `${window.location.origin}/profile/${username}`
+    if (navigator.share) {
+      navigator.share({ title: profile?.display_name || username, url })
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopyLabel('Copied!')
+        setTimeout(() => setCopyLabel('Share'), 2000)
+      })
+    }
+  }
 
   useEffect(() => {
     if (!profile) return
@@ -39,6 +52,10 @@ function ProfilePage() {
   return (
     <main className="profile-page">
       <ProfileHeader profile={profile} />
+
+      <button type="button" className="profile-page__share" onClick={handleShare}>
+        {copyLabel}
+      </button>
 
       {!linksLoading && <LinkList links={links} />}
 

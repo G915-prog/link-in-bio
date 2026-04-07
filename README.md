@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.2.4 — 2026-04-07
+- `ProfilePage.jsx` — added Share button: uses Web Share API (native share sheet) when available; falls back to clipboard copy with "Copied!" feedback for 2 seconds
+
 ### 1.2.3 — 2026-04-07
 - `StatsPanel.jsx` — added per-link breakdown table sorted by click count descending
 
