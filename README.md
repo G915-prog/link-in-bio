@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.3.1 — 2026-04-07
+- **Fix**: Button reset missing `color: inherit` — browsers apply UA `color: ButtonText` (black) to `<button>` elements, making Edit/Delete/Cancel buttons unreadable on dark themes (Terminal, Velvet, Vapor)
+
 ### 2.3.0 — 2026-04-07
 - **Nav**: Full redesign — sticky frosted-glass bar (backdrop-filter blur), 62px height, `z-index: 100`
 - **Nav**: Brand wordmark `link·in·bio` on the left, link group on the right
