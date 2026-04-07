@@ -21,18 +21,9 @@ function Home() {
           return (
             <li key={username} className="home__profile-item">
               <Link to={profilePath} className="home__profile-link">
-                {label}
+                <span className="home__profile-label">{label}</span>
+                <span className="home__profile-url">{origin}{profilePath}</span>
               </Link>
-              <span className="home__profile-url">
-                <a
-                  href={`${origin}${profilePath}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="home__profile-url-link"
-                >
-                  {origin}{profilePath}
-                </a>
-              </span>
             </li>
           )
         })}

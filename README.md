@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.7.3 — 2026-04-07
+- `Home.jsx` — profile URL is now display text inside the React Router Link, not a separate external anchor
+
 ### 0.7.2 — 2026-04-07
 - `Home.jsx` — each profile entry now shows the full public URL as a clickable link alongside the theme label
 
