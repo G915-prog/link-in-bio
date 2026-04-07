@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.7.2 — 2026-04-07
+- `Home.jsx` — each profile entry now shows the full public URL as a clickable link alongside the theme label
+
 ### 0.7.1 — 2026-04-07
 - Updated `Home.jsx` — lists links to all 5 test profile pages
 

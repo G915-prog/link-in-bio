@@ -9,18 +9,33 @@ const TEST_PROFILES = [
 ]
 
 function Home() {
+  const origin = window.location.origin
+
   return (
     <main className="home">
       <h1 className="home__title">Link-in-Bio</h1>
       <p className="home__subtitle">Test profiles</p>
       <ul className="home__profile-list">
-        {TEST_PROFILES.map(({ username, label }) => (
-          <li key={username} className="home__profile-item">
-            <Link to={`/profile/${username}`} className="home__profile-link">
-              {label}
-            </Link>
-          </li>
-        ))}
+        {TEST_PROFILES.map(({ username, label }) => {
+          const profilePath = `/profile/${username}`
+          return (
+            <li key={username} className="home__profile-item">
+              <Link to={profilePath} className="home__profile-link">
+                {label}
+              </Link>
+              <span className="home__profile-url">
+                <a
+                  href={`${origin}${profilePath}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="home__profile-url-link"
+                >
+                  {origin}{profilePath}
+                </a>
+              </span>
+            </li>
+          )
+        })}
       </ul>
     </main>
   )
