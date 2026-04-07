@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.2.1 — 2026-04-07
+- **Fix**: `useOwnProfile.upsertProfile` — `data` was missing from Supabase destructuring; every save threw a `ReferenceError` and crashed React (blank page). Fixed with `.select().single()` and `setProfile(data)`.
+- **Fix**: `ProfileEditor.handleThemeChange` — `setTheme()` call was removed in 2.2.0 to enforce profile-exclusivity, leaving the picker with no visual feedback. Re-added for live preview; Dashboard's `useEffect` still resets to `default` on mount so themes never leak into the dashboard.
+
 ### 2.2.0 — 2026-04-07
 - **Themes**: Replaced 5 placeholder color swaps with fully distinct visual identities — each theme has its own font, shape language, background treatment, layout character, and animation style
   - `default` → **Paper** — Lora + Cormorant Garamond serif, warm parchment `#f7f3ed`, radial gradient depth, italic display name, soft fade-up entrance
