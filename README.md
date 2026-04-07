@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.3 — 2026-04-07
+- `Dashboard.jsx` — replaced getSession() with onAuthStateChange to avoid race condition where session hadn't settled before the redirect check
+
 ### 1.0.2 — 2026-04-07
 - `Nav.jsx` — Profile link now resolves to the logged-in user's own profile; falls back to /login if no session. Subscribes to auth state changes so it updates on sign in/out.
 

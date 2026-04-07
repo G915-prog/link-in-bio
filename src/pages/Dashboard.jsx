@@ -9,7 +9,7 @@ function Dashboard() {
   const [checking, setChecking] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         navigate('/login')
       } else {
@@ -17,6 +17,7 @@ function Dashboard() {
       }
       setChecking(false)
     })
+    return () => subscription.unsubscribe()
   }, [navigate])
 
   async function handleSignOut() {
