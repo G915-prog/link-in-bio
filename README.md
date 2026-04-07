@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.7.0 — 2026-04-07
+- Added `src/components/LinkItem.jsx` — renders link title + URL, fires fire-and-forget `increment_click_count` RPC on click
+- Added `src/components/LinkList.jsx` — ordered list of `<LinkItem>` components
+- Updated `ProfilePage.jsx` — replaced inline list with `<LinkList>`
+
 ### 0.6.1 — 2026-04-07
 - `useTheme.js` — also sets `document.body.style.color` so text is readable on all theme backgrounds
 

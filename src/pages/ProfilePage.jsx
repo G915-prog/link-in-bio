@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useProfile } from '../hooks/useProfile'
 import { supabase } from '../lib/supabase'
 import ProfileHeader from '../components/ProfileHeader'
+import LinkList from '../components/LinkList'
 import QRCode from '../components/QRCode'
 
 function ProfilePage() {
@@ -39,22 +40,7 @@ function ProfilePage() {
     <main className="profile-page">
       <ProfileHeader profile={profile} />
 
-      {!linksLoading && (
-        <ul className="links-list">
-          {links.map((link) => (
-            <li key={link.id} className="links-list__item">
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="links-list__anchor"
-              >
-                {link.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      {!linksLoading && <LinkList links={links} />}
 
       <QRCode url={`${window.location.origin}/profile/${username}`} />
     </main>
