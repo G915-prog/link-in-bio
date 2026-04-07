@@ -32,16 +32,18 @@ export function useOwnProfile(userId) {
   }, [userId])
 
   async function upsertProfile({ username, display_name, bio, avatar_url, theme }) {
-    const { error: upsertError } = await supabase
+    const { data, error: upsertError } = await supabase
       .from('profiles')
       .upsert({ id: userId, username, display_name, bio, avatar_url, theme, updated_at: new Date().toISOString() })
+      .select()
+      .single()
 
     if (upsertError) {
       setError(upsertError.message)
       return { error: upsertError.message }
     }
 
-    setProfile(prev => ({ ...prev, ...data }))
+    setProfile(data)
     return { error: null }
   }
 
