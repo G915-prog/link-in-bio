@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.2.2 — 2026-04-07
+- `LinkItem.jsx` — fixed RPC never firing: supabase.rpc() is a lazy builder that only executes on .then()/.await; made handleClick async and awaited the call
+
 ### 1.2.1 — 2026-04-07
 - `useLinks.js` — subscribes to Supabase Realtime `postgres_changes` (UPDATE) on the links table filtered by userId; merges incoming rows into local state so click_count updates live without a page refresh
 - `LinkItem.jsx` — removed debug console.log statements

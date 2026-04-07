@@ -1,8 +1,8 @@
 import { supabase } from '../lib/supabase'
 
 function LinkItem({ link }) {
-  function handleClick() {
-    supabase.rpc('increment_click_count', { link_id: link.id })
+  async function handleClick() {
+    await supabase.rpc('increment_click_count', { link_id: link.id })
   }
 
   return (
