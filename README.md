@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.6 — 2026-04-07
+- `Nav.jsx` — hide Login link when authenticated; Profile link falls back to /login only while username is still loading or missing (not as a permanent logged-out state)
+
 ### 1.0.5 — 2026-04-07
 - `Nav.jsx` — fixed deadlock: moved profiles DB fetch out of `onAuthStateChange` callback into a separate `useEffect` watching `userId` state. Calling `supabase.from()` inside an `onAuthStateChange` callback triggers `auth.getSession()` internally, which tries to acquire the Supabase auth lock that the SDK is already holding while notifying subscribers — causing `signInWithPassword` and `getSession()` to hang indefinitely everywhere in the app.
 

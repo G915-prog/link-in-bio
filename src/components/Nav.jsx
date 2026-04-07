@@ -34,6 +34,8 @@ function Nav() {
       })
   }, [userId])
 
+  const isLoggedIn = userId !== undefined && userId !== null
+
   return (
     <nav>
       <NavLink to="/">Home</NavLink>
@@ -42,7 +44,7 @@ function Nav() {
         : <NavLink to="/login">Profile</NavLink>
       }
       <NavLink to="/dashboard">Dashboard</NavLink>
-      <NavLink to="/login">Login</NavLink>
+      {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
     </nav>
   )
 }
