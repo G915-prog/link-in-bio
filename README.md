@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.2.3 — 2026-04-07
+- `StatsPanel.jsx` — added per-link breakdown table sorted by click count descending
+
 ### 1.2.2 — 2026-04-07
 - `LinkItem.jsx` — fixed RPC never firing: supabase.rpc() is a lazy builder that only executes on .then()/.await; made handleClick async and awaited the call
 

@@ -25,6 +25,8 @@ function StatsPanel({ links }) {
   const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   const recentLinks = links.filter(l => new Date(l.created_at) > cutoff).length
 
+  const sortedByClicks = [...links].sort((a, b) => (b.click_count ?? 0) - (a.click_count ?? 0))
+
   return (
     <div className="stats-panel">
       <div className="stats-panel__stat">
@@ -48,6 +50,23 @@ function StatsPanel({ links }) {
         <span className="stats-panel__label">Added this week</span>
         <span className="stats-panel__value">{recentLinks}</span>
       </div>
+
+      <table className="stats-panel__table">
+        <thead>
+          <tr>
+            <th className="stats-panel__th">Link</th>
+            <th className="stats-panel__th">Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedByClicks.map(link => (
+            <tr key={link.id} className="stats-panel__row">
+              <td className="stats-panel__td stats-panel__td--title">{link.title}</td>
+              <td className="stats-panel__td stats-panel__td--clicks">{link.click_count ?? 0}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
