@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.4 — 2026-04-07
+- `Dashboard.jsx` — use both getSession() for immediate check and onAuthStateChange for ongoing state (sign out, expiry)
+
 ### 1.0.3 — 2026-04-07
 - `Dashboard.jsx` — replaced getSession() with onAuthStateChange to avoid race condition where session hadn't settled before the redirect check
 
