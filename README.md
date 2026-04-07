@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.9.0 — 2026-04-07
+- Built `Dashboard.jsx` — checks session on mount, redirects to /login if none, shows user email, sign out button, and placeholder sections for ProfileEditor, LinkEditor, StatsPanel
+- Built `Login.jsx` — email/password form with sign in / sign up toggle, error display, redirects to /dashboard on success
+
 ### 0.8.0 — 2026-04-07
 - Built out `QRCode.jsx` — generates QR code onto a canvas via the `qrcode` package, with a Download PNG button
 - Updated `ProfilePage.jsx` — passes `profile.username` (from DB) to QRCode instead of the URL param

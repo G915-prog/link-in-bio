@@ -1,5 +1,79 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+
 function Login() {
-  return <h1>Login</h1>
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const [isSignUp, setIsSignUp] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+
+    const { error: authError } = isSignUp
+      ? await supabase.auth.signUp({ email, password })
+      : await supabase.auth.signInWithPassword({ email, password })
+
+    setLoading(false)
+
+    if (authError) {
+      setError(authError.message)
+      return
+    }
+
+    navigate('/dashboard')
+  }
+
+  return (
+    <main className="login">
+      <div className="login__card">
+        <h1 className="login__title">{isSignUp ? 'Create account' : 'Sign in'}</h1>
+
+        <form className="login__form" onSubmit={handleSubmit}>
+          <label className="login__label" htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            className="login__input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+
+          <label className="login__label" htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            className="login__input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete={isSignUp ? 'new-password' : 'current-password'}
+          />
+
+          {error && <p className="login__error">{error}</p>}
+
+          <button type="submit" className="login__submit" disabled={loading}>
+            {loading ? 'Please wait...' : isSignUp ? 'Sign up' : 'Sign in'}
+          </button>
+        </form>
+
+        <button
+          type="button"
+          className="login__toggle"
+          onClick={() => { setIsSignUp((v) => !v); setError(null) }}
+        >
+          {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+        </button>
+      </div>
+    </main>
+  )
 }
 
 export default Login
