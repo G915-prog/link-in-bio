@@ -3,31 +3,36 @@ import { NavLink } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 function Nav() {
+  const [userId, setUserId] = useState(undefined) // undefined = auth not yet checked
   const [username, setUsername] = useState(null)
 
+  // Step 1: track auth state — NO Supabase calls inside the callback
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session) return
-      const { data } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('id', session.user.id)
-        .single()
-      if (data) setUsername(data.username)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id ?? null)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!session) { setUsername(null); return }
-      const { data } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('id', session.user.id)
-        .single()
-      if (data) setUsername(data.username)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id ?? null)
     })
 
     return () => subscription.unsubscribe()
   }, [])
+
+  // Step 2: fetch username only after userId is known, outside the auth callback
+  useEffect(() => {
+    if (userId === undefined) return // still checking
+    if (!userId) { setUsername(null); return }
+
+    supabase
+      .from('profiles')
+      .select('username')
+      .eq('id', userId)
+      .single()
+      .then(({ data }) => {
+        setUsername(data?.username ?? null)
+      })
+  }, [userId])
 
   return (
     <nav>
