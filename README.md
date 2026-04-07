@@ -5,8 +5,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 ## Changelog
 
 ### 2.5.0 — 2026-04-07
-- **Routing**: `/` now redirects to `/profile/:username` for logged-in users with a set username, to `/dashboard` if logged in but username not yet set, or to `/login` for unauthenticated visitors
-- **Nav**: Brand wordmark now links directly to the user's profile (or `/login` when signed out); "Home" link replaces the old "Profile" link pointing to the same destination; standalone "Home" and "Profile" links collapsed into one
+- **Routing**: `/` renders the logged-in user's public profile view (bio, links) directly — no redirect, URL stays `/`; unauthenticated visitors are sent to `/login`
+- **ProfilePage**: accepts optional `username` prop so it can be rendered at `/` with the auth user's username, while still working at `/profile/:username` via `useParams` for public sharing
+- **Nav**: brand and "Home" link both point to `/`; Dashboard remains separate
 - **Removed**: `Home.jsx` page and `src/data/testProfiles.js` — test profile index no longer needed
 
 ### 2.4.0 — 2026-04-07

@@ -9,14 +9,13 @@ import ProfilePage from './pages/ProfilePage'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 
-function HomeRedirect() {
+function HomePage() {
   const { user, loading: authLoading } = useAuth()
   const { profile, loading: profileLoading } = useOwnProfile(user?.id ?? null)
 
-  if (authLoading || (user && profileLoading)) return null
+  if (authLoading || profileLoading) return null
   if (!user) return <Navigate to="/login" replace />
-  if (profile?.username) return <Navigate to={`/profile/${profile.username}`} replace />
-  return <Navigate to="/dashboard" replace />
+  return <ProfilePage username={profile?.username} />
 }
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
       <ThemeProvider>
         <Nav />
         <Routes>
-          <Route path="/" element={<HomeRedirect />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/profile/:username" element={<ProfilePage />} />
           <Route path="/login" element={<Login />} />
           <Route

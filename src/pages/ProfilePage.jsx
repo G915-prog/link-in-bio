@@ -6,8 +6,9 @@ import ProfileHeader from '../components/ProfileHeader'
 import LinkList from '../components/LinkList'
 import QRCode from '../components/QRCode'
 
-function ProfilePage() {
-  const { username } = useParams()
+function ProfilePage({ username: usernameOverride }) {
+  const params = useParams()
+  const username = usernameOverride ?? params.username
   const { profile, loading } = useProfile(username)
   const { links, loading: linksLoading } = useLinks(profile?.id ?? null, { publishedOnly: true })
 
