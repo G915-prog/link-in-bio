@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.2 — 2026-04-07
+- `Nav.jsx` — Profile link now resolves to the logged-in user's own profile; falls back to /login if no session. Subscribes to auth state changes so it updates on sign in/out.
+
 ### 1.0.1 — 2026-04-07
 - `ProfileEditor.jsx` — theme swatches now apply instantly via `useTheme(theme)` without needing to save
 
