@@ -37,7 +37,7 @@ export function useLinks(userId) {
 
     const { data, error: insertError } = await supabase
       .from('links')
-      .insert({ title, url, user_id: userId, display_order: links.length })
+      .insert({ title, url, user_id: userId, display_order: links.length, is_published: true })
       .select()
       .single()
 
