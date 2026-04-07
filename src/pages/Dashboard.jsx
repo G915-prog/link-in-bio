@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { useLinks } from '../hooks/useLinks'
 import ProfileEditor from '../components/ProfileEditor'
 import LinkEditor from '../components/LinkEditor'
+import StatsPanel from '../components/StatsPanel'
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -11,7 +13,6 @@ function Dashboard() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('[Dashboard] getSession —', session ? `user: ${session.user.email}` : 'no session')
       if (!session) {
         navigate('/login')
       } else {
@@ -21,7 +22,6 @@ function Dashboard() {
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log('[Dashboard] onAuthStateChange — event:', _event, '| session:', session ? session.user.email : 'null')
       if (!session) {
         navigate('/login')
       } else {
@@ -31,6 +31,8 @@ function Dashboard() {
 
     return () => subscription.unsubscribe()
   }, [navigate])
+
+  const linksHook = useLinks(user?.id ?? null)
 
   async function handleSignOut() {
     await supabase.auth.signOut()
@@ -55,11 +57,12 @@ function Dashboard() {
 
       <section className="dashboard__section">
         <h2>Link Editor</h2>
-        <LinkEditor userId={user.id} />
+        <LinkEditor {...linksHook} />
       </section>
 
       <section className="dashboard__section">
         <h2>Stats Panel</h2>
+        <StatsPanel links={linksHook.links} />
       </section>
     </main>
   )

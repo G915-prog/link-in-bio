@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.2.0 — 2026-04-07
+- Added `src/components/StatsPanel.jsx` — derives totalClicks, topLink, and recentLinks (last 7 days) from the links prop; shows "—" placeholders when empty
+- Refactored `LinkEditor.jsx` — no longer calls `useLinks` internally; accepts hook state and functions as props
+- Updated `Dashboard.jsx` — lifts `useLinks` to dashboard level, spreads into `LinkEditor`, passes links to `StatsPanel`; also removed debug console.log statements
+
 ### 1.1.1 — 2026-04-07
 - Added `src/components/DraggableLinkItem.jsx` — drag handle (⠿), read/edit mode toggle, Save/Cancel/Delete actions; uses HTML5 drag events
 - Updated `LinkEditor.jsx` — replaced ↑/↓ buttons with `DraggableLinkItem`; tracks `dragIndex` state to wire `onDragStart`/`onDrop` into `reorderLinks`

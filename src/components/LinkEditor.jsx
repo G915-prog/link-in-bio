@@ -1,14 +1,11 @@
 import { useState } from 'react'
-import { useLinks } from '../hooks/useLinks'
 import DraggableLinkItem from './DraggableLinkItem'
 
-function LinkEditor({ userId }) {
-  const { links, loading, error, addLink, deleteLink, updateLink, reorderLinks } = useLinks(userId)
-
-  const [title, setTitle]       = useState('')
-  const [url, setUrl]           = useState('')
-  const [adding, setAdding]     = useState(false)
-  const [addError, setAddError] = useState(null)
+function LinkEditor({ links, loading, error, addLink, deleteLink, updateLink, reorderLinks }) {
+  const [title, setTitle]         = useState('')
+  const [url, setUrl]             = useState('')
+  const [adding, setAdding]       = useState(false)
+  const [addError, setAddError]   = useState(null)
   const [dragIndex, setDragIndex] = useState(null)
 
   async function handleAdd(e) {
