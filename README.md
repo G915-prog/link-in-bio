@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.2.5 — 2026-04-07
+- `LinkItem.jsx` — added `onAuxClick` handler so middle-click (open in background tab) also increments click count; left-click and shift-click already fired `onClick`
+
 ### 1.2.4 — 2026-04-07
 - `ProfilePage.jsx` — added Share button: uses Web Share API (native share sheet) when available; falls back to clipboard copy with "Copied!" feedback for 2 seconds
 

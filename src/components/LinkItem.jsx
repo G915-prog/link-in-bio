@@ -12,6 +12,7 @@ function LinkItem({ link }) {
       rel="noopener noreferrer"
       className="link-item"
       onClick={handleClick}
+      onAuxClick={handleClick}
     >
       <span className="link-item__title">{link.title}</span>
       <span className="link-item__url">{link.url}</span>
