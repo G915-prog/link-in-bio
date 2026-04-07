@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.3.5 — 2026-04-07
+- Added `public/favicon.svg` — custom chain-link icon on indigo background
+- Updated `index.html` to reference the new favicon (removes 404 on vite.svg)
+
 ### 0.3.4 — 2026-04-07
 - `ProfilePage.jsx` — removed unauthenticated seed hack; test row should be inserted manually via Supabase Table Editor
 
