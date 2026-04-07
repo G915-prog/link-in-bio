@@ -4,6 +4,11 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.1.0 — 2026-04-07
+- Added `src/hooks/useLinks.js` — fetches links ordered by `display_order`; exposes `addLink`, `deleteLink`, `updateLink`, `reorderLinks` all with optimistic updates and rollback on error
+- Added `src/components/LinkEditor.jsx` — "Add link" form (title + URL), inline edit per item, delete, and ↑/↓ reorder buttons
+- Wired `LinkEditor` into `Dashboard.jsx`
+
 ### 1.0.6 — 2026-04-07
 - `Nav.jsx` — hide Login link when authenticated; Profile link falls back to /login only while username is still loading or missing (not as a permanent logged-out state)
 

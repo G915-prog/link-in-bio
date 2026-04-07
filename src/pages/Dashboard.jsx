@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import ProfileEditor from '../components/ProfileEditor'
+import LinkEditor from '../components/LinkEditor'
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -54,6 +55,7 @@ function Dashboard() {
 
       <section className="dashboard__section">
         <h2>Link Editor</h2>
+        <LinkEditor userId={user.id} />
       </section>
 
       <section className="dashboard__section">
