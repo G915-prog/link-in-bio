@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useProfile } from '../hooks/useProfile'
+import { useTheme } from '../hooks/useTheme'
 import ThemePicker from './ThemePicker'
 
 function ProfileEditor({ user }) {
@@ -11,6 +12,8 @@ function ProfileEditor({ user }) {
   const [avatarUrl, setAvatarUrl]     = useState('')
   const [theme, setTheme]             = useState('default')
   const [originalUsername, setOriginalUsername] = useState('')
+
+  useTheme(theme)
 
   const [saveStatus, setSaveStatus] = useState(null) // null | 'saving' | 'saved' | 'error'
   const [saveError, setSaveError]   = useState(null)

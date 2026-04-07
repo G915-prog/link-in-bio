@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.0.1 — 2026-04-07
+- `ProfileEditor.jsx` — theme swatches now apply instantly via `useTheme(theme)` without needing to save
+
 ### 1.0.0 — 2026-04-07
 - Extended `useProfile` hook with `fetchById` option (SELECT by user ID)
 - Built `ProfileEditor.jsx` — controlled form for username, display name, bio, avatar URL, theme picker; username change warning; Saving/Saved/error states
