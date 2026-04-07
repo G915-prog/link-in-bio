@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState('default')
 
-  function setTheme(key) {
+  const setTheme = useCallback((key) => {
     setThemeState(key ?? 'default')
-  }
+  }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
