@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 1.1.1 — 2026-04-07
+- Added `src/components/DraggableLinkItem.jsx` — drag handle (⠿), read/edit mode toggle, Save/Cancel/Delete actions; uses HTML5 drag events
+- Updated `LinkEditor.jsx` — replaced ↑/↓ buttons with `DraggableLinkItem`; tracks `dragIndex` state to wire `onDragStart`/`onDrop` into `reorderLinks`
+
 ### 1.1.0 — 2026-04-07
 - Added `src/hooks/useLinks.js` — fetches links ordered by `display_order`; exposes `addLink`, `deleteLink`, `updateLink`, `reorderLinks` all with optimistic updates and rollback on error
 - Added `src/components/LinkEditor.jsx` — "Add link" form (title + URL), inline edit per item, delete, and ↑/↓ reorder buttons
