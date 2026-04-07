@@ -5,7 +5,8 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 ## Changelog
 
 ### 2.3.2 — 2026-04-07
-- **Fix**: Dashboard now permanently stays in Paper style — removed `setTheme()` call from `ProfileEditor.handleThemeChange`; ThemePicker still shows the saved selection via highlighted active card, theme applies on the public profile page only
+- **Fix**: `ProfileEditor` — restored `setTheme(key)` in `handleThemeChange` so clicking a theme card gives a live full-page preview; Dashboard's `useEffect` still resets to Paper on mount so navigating back always returns to the default style
+- **Fix**: `Home` — added `useEffect(() => setTheme('default'))` so the home page always resets to Paper instead of inheriting stale theme from prior navigation
 
 ### 2.3.1 — 2026-04-07
 - **Fix**: Button reset missing `color: inherit` — browsers apply UA `color: ButtonText` (black) to `<button>` elements, making Edit/Delete/Cancel buttons unreadable on dark themes (Terminal, Velvet, Vapor)

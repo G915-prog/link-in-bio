@@ -1,8 +1,15 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { TEST_PROFILES } from '../data/testProfiles'
+import { useTheme } from '../context/ThemeContext'
 
 function Home() {
+  const { setTheme } = useTheme()
   const origin = window.location.origin
+
+  useEffect(() => {
+    setTheme('default')
+  }, [setTheme])
 
   return (
     <main className="home">

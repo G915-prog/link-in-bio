@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useOwnProfile } from '../hooks/useOwnProfile'
 import { useProfileForm } from '../hooks/useProfileForm'
+import { useTheme } from '../context/ThemeContext'
 import ThemePicker from './ThemePicker'
 
 function ProfileEditor({ userId }) {
   const { profile, loading, upsertProfile } = useOwnProfile(userId)
   const { fields, setField, usernameChanged, confirmUsernameSaved } = useProfileForm(profile)
+  const { setTheme } = useTheme()
 
   const [saveStatus, setSaveStatus] = useState(null) // null | 'saving' | 'saved' | 'error'
   const [saveError, setSaveError] = useState(null)
@@ -35,6 +37,7 @@ function ProfileEditor({ userId }) {
 
   function handleThemeChange(key) {
     setField('theme', key)
+    setTheme(key)
   }
 
   if (loading) return <p className="status-message">Loading profile...</p>
