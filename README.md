@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.6.1 — 2026-04-07
+- `useTheme.js` — also sets `document.body.style.color` so text is readable on all theme backgrounds
+
 ### 0.6.0 — 2026-04-07
 - Extracted `src/lib/themes.js` — shared THEMES map and DEFAULT_THEME used across the app
 - Added `src/hooks/useTheme.js` — applies theme CSS variables to `:root` and body; resets on unmount
