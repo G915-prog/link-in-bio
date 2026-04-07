@@ -3,4 +3,6 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+console.log('[supabase] URL:', supabaseUrl ?? 'MISSING', '| Key:', supabaseAnonKey ? 'present' : 'MISSING')
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
