@@ -27,6 +27,19 @@ export function useLinks(userId) {
     }
 
     fetchLinks()
+
+    const channel = supabase
+      .channel(`links:${userId}`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'links', filter: `user_id=eq.${userId}` },
+        (payload) => {
+          setLinks(prev => prev.map(l => l.id === payload.new.id ? { ...l, ...payload.new } : l))
+        }
+      )
+      .subscribe()
+
+    return () => supabase.removeChannel(channel)
   }, [userId])
 
   async function addLink({ title, url }) {
