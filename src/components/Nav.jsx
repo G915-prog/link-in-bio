@@ -10,14 +10,23 @@ function Nav() {
 
   return (
     <nav className="nav">
-      <NavLink to="/" className="nav__link">Home</NavLink>
-      <NavLink to={username ? `/profile/${username}` : '/login'} className="nav__link">
-        Profile
+      <NavLink to="/" className="nav__brand" aria-label="Home">
+        link·in·bio
       </NavLink>
-      <NavLink to="/dashboard" className="nav__link">Dashboard</NavLink>
-      {!loading && !user && (
-        <NavLink to="/login" className="nav__link">Login</NavLink>
-      )}
+
+      <div className="nav__links">
+        <NavLink to="/" className="nav__link" end>Home</NavLink>
+        <NavLink
+          to={username ? `/profile/${username}` : '/login'}
+          className="nav__link"
+        >
+          Profile
+        </NavLink>
+        <NavLink to="/dashboard" className="nav__link">Dashboard</NavLink>
+        {!loading && !user && (
+          <NavLink to="/login" className="nav__link nav__link--cta">Login</NavLink>
+        )}
+      </div>
     </nav>
   )
 }
