@@ -1,9 +1,13 @@
-import { useTheme } from '../hooks/useTheme'
+import { useEffect } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 function ProfileHeader({ profile }) {
   const { display_name, bio, avatar_url, theme } = profile
+  const { setTheme } = useTheme()
 
-  useTheme(theme)
+  useEffect(() => {
+    setTheme(theme ?? 'default')
+  }, [theme, setTheme])
 
   return (
     <div className="profile-header">

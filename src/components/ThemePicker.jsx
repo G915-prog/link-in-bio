@@ -9,8 +9,8 @@ function ThemePicker({ value, onChange }) {
           <button
             key={key}
             type="button"
-            className={`theme-picker__swatch ${value === key ? 'theme-picker__swatch--active' : ''}`}
-            style={{ backgroundColor: bg, borderColor: accent }}
+            className={`theme-picker__swatch${value === key ? ' theme-picker__swatch--active' : ''}`}
+            style={{ '--swatch-bg': bg, '--swatch-accent': accent }}
             title={key}
             aria-label={`${key} theme`}
             aria-pressed={value === key}

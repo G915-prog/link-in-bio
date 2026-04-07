@@ -1,32 +1,16 @@
-import { useState, useEffect } from 'react'
-import { useProfile } from '../hooks/useProfile'
-import { useTheme } from '../hooks/useTheme'
+import { useState } from 'react'
+import { useOwnProfile } from '../hooks/useOwnProfile'
+import { useProfileForm } from '../hooks/useProfileForm'
+import { useTheme } from '../context/ThemeContext'
 import ThemePicker from './ThemePicker'
 
-function ProfileEditor({ user }) {
-  const { profile, loading, upsertProfile } = useProfile(null, { fetchById: user.id })
-
-  const [username, setUsername]       = useState('')
-  const [displayName, setDisplayName] = useState('')
-  const [bio, setBio]                 = useState('')
-  const [avatarUrl, setAvatarUrl]     = useState('')
-  const [theme, setTheme]             = useState('default')
-  const [originalUsername, setOriginalUsername] = useState('')
-
-  useTheme(theme)
+function ProfileEditor({ userId }) {
+  const { profile, loading, upsertProfile } = useOwnProfile(userId)
+  const { fields, setField, usernameChanged, confirmUsernameSaved } = useProfileForm(profile)
+  const { setTheme } = useTheme()
 
   const [saveStatus, setSaveStatus] = useState(null) // null | 'saving' | 'saved' | 'error'
-  const [saveError, setSaveError]   = useState(null)
-
-  useEffect(() => {
-    if (!profile) return
-    setUsername(profile.username ?? '')
-    setDisplayName(profile.display_name ?? '')
-    setBio(profile.bio ?? '')
-    setAvatarUrl(profile.avatar_url ?? '')
-    setTheme(profile.theme ?? 'default')
-    setOriginalUsername(profile.username ?? '')
-  }, [profile])
+  const [saveError, setSaveError] = useState(null)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -34,26 +18,29 @@ function ProfileEditor({ user }) {
     setSaveError(null)
 
     const { error } = await upsertProfile({
-      username,
-      display_name: displayName,
-      bio,
-      avatar_url: avatarUrl,
-      theme,
+      username: fields.username,
+      display_name: fields.displayName,
+      bio: fields.bio,
+      avatar_url: fields.avatarUrl,
+      theme: fields.theme,
     })
 
     if (error) {
       setSaveError(error)
       setSaveStatus('error')
     } else {
-      setOriginalUsername(username)
+      confirmUsernameSaved()
       setSaveStatus('saved')
       setTimeout(() => setSaveStatus(null), 3000)
     }
   }
 
-  if (loading) return <p className="status-message">Loading profile...</p>
+  function handleThemeChange(key) {
+    setField('theme', key)
+    setTheme(key)
+  }
 
-  const usernameChanged = username !== originalUsername
+  if (loading) return <p className="status-message">Loading profile...</p>
 
   return (
     <form className="profile-editor" onSubmit={handleSubmit}>
@@ -63,8 +50,8 @@ function ProfileEditor({ user }) {
           id="pe-username"
           type="text"
           className="profile-editor__input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={fields.username}
+          onChange={e => setField('username', e.target.value)}
           required
         />
         {usernameChanged && (
@@ -80,8 +67,8 @@ function ProfileEditor({ user }) {
           id="pe-display-name"
           type="text"
           className="profile-editor__input"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
+          value={fields.displayName}
+          onChange={e => setField('displayName', e.target.value)}
         />
       </div>
 
@@ -90,8 +77,8 @@ function ProfileEditor({ user }) {
         <textarea
           id="pe-bio"
           className="profile-editor__textarea"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
+          value={fields.bio}
+          onChange={e => setField('bio', e.target.value)}
           rows={3}
         />
       </div>
@@ -102,12 +89,12 @@ function ProfileEditor({ user }) {
           id="pe-avatar"
           type="url"
           className="profile-editor__input"
-          value={avatarUrl}
-          onChange={(e) => setAvatarUrl(e.target.value)}
+          value={fields.avatarUrl}
+          onChange={e => setField('avatarUrl', e.target.value)}
         />
       </div>
 
-      <ThemePicker value={theme} onChange={setTheme} />
+      <ThemePicker value={fields.theme} onChange={handleThemeChange} />
 
       {saveStatus === 'error' && (
         <p className="profile-editor__error">{saveError}</p>

@@ -1,45 +1,20 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { useAuth } from '../context/AuthContext'
 import { useLinks } from '../hooks/useLinks'
+import { supabase } from '../lib/supabase'
+import { useNavigate } from 'react-router-dom'
 import ProfileEditor from '../components/ProfileEditor'
 import LinkEditor from '../components/LinkEditor'
 import StatsPanel from '../components/StatsPanel'
 
 function Dashboard() {
+  const { user } = useAuth()
   const navigate = useNavigate()
-  const [user, setUser] = useState(null)
-  const [checking, setChecking] = useState(true)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        navigate('/login')
-      } else {
-        setUser(session.user)
-      }
-      setChecking(false)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate('/login')
-      } else {
-        setUser(session.user)
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [navigate])
-
   const linksHook = useLinks(user?.id ?? null)
 
   async function handleSignOut() {
     await supabase.auth.signOut()
     navigate('/login')
   }
-
-  if (checking) return <p className="status-message">Checking session...</p>
 
   return (
     <main className="dashboard">
@@ -51,17 +26,17 @@ function Dashboard() {
       </header>
 
       <section className="dashboard__section">
-        <h2>Profile Editor</h2>
-        <ProfileEditor user={user} />
+        <h2 className="dashboard__section-title">Profile</h2>
+        <ProfileEditor userId={user.id} />
       </section>
 
       <section className="dashboard__section">
-        <h2>Link Editor</h2>
+        <h2 className="dashboard__section-title">Links</h2>
         <LinkEditor {...linksHook} />
       </section>
 
       <section className="dashboard__section">
-        <h2>Stats Panel</h2>
+        <h2 className="dashboard__section-title">Stats</h2>
         <StatsPanel links={linksHook.links} />
       </section>
     </main>

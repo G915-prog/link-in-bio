@@ -4,6 +4,32 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 2.0.0 — 2026-04-07
+- **Architecture**: Added `AuthContext` (AuthProvider + useAuth) — auth state owned once at the top of the tree; no component fetches it independently
+- **Architecture**: Added `ThemeContext` (ThemeProvider + useTheme) — single theme owner with no competing unmount resets
+- **Architecture**: Added `ProtectedRoute` — replaces inline auth checks in Dashboard
+- **Hooks**: Added `useOwnProfile(userId)` — fetches authed user's profile by ID; exposes `upsertProfile` using the passed userId (no internal `getUser()`)
+- **Hooks**: Added `useProfileForm(profile)` — extracts 7 individual `useState` calls from ProfileEditor into a single form hook
+- **Hooks**: Simplified `useProfile` — public fetch by username only; removed `fetchById` option and `upsertProfile`
+- **Hooks**: Fixed `useLinks` — `display_order` now uses `Math.max` to prevent collisions on rapid adds; added `publishedOnly` option so ProfilePage reuses the hook
+- **Components**: Added `LinkRow` — display mode for a link item (title, url, Edit/Delete)
+- **Components**: Added `LinkEditForm` — edit mode with stale-state fix (`useEffect` on `link.id`); replaces inline edit branch in DraggableLinkItem
+- **Components**: Refactored `DraggableLinkItem` — now a thin shell delegating to `LinkRow` or `LinkEditForm`
+- **Components**: Fixed `LinkEditor` — renamed shadow variable `i` → `dragIdx`/`dropIdx`
+- **Components**: Fixed `LinkList` — accepts `emptyMessage` prop instead of silently returning null
+- **Components**: Fixed `ThemePicker` — replaced inline CSS properties with CSS custom properties (`--swatch-bg`, `--swatch-accent`) consumed by stylesheet
+- **Components**: Fixed `QRCode` — `handleDownload` extracted to `src/lib/download.js`
+- **Components**: Updated `Nav` — uses `useAuth` + `useOwnProfile`; removed duplicate auth state machine
+- **Components**: Updated `ProfileHeader` — calls `setTheme` from ThemeContext instead of applying CSS vars directly
+- **Components**: Updated `ProfileEditor` — uses `useOwnProfile`, `useProfileForm`, `useTheme`; accepts `userId` prop
+- **Pages**: Updated `Dashboard` — uses `useAuth`; no `getSession`/`onAuthStateChange`; passes `userId` to ProfileEditor
+- **Pages**: Updated `ProfilePage` — uses `useLinks(publishedOnly)` instead of raw inline query
+- **Pages**: Updated `Home` — imports TEST_PROFILES from `src/data/testProfiles.js`
+- **App**: Added `AuthProvider` + `ThemeProvider` wrapping the tree; `ProtectedRoute` guards `/dashboard`; fixed indentation
+- **Styles**: Wrote `src/index.css` — full BEM stylesheet covering all components using CSS custom property theming
+- Added `src/lib/download.js`, `src/data/testProfiles.js`
+- Deleted `src/hooks/useTheme.js` (replaced by ThemeContext)
+
 ### 1.2.5 — 2026-04-07
 - `LinkItem.jsx` — added `onAuxClick` handler so middle-click (open in background tab) also increments click count; left-click and shift-click already fired `onClick`
 

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import DraggableLinkItem from './DraggableLinkItem'
 
 function LinkEditor({ links, loading, error, addLink, deleteLink, updateLink, reorderLinks }) {
-  const [title, setTitle]         = useState('')
-  const [url, setUrl]             = useState('')
-  const [adding, setAdding]       = useState(false)
-  const [addError, setAddError]   = useState(null)
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
+  const [adding, setAdding] = useState(false)
+  const [addError, setAddError] = useState(null)
   const [dragIndex, setDragIndex] = useState(null)
 
   async function handleAdd(e) {
@@ -57,9 +57,9 @@ function LinkEditor({ links, loading, error, addLink, deleteLink, updateLink, re
             key={link.id}
             link={link}
             index={i}
-            onDragStart={i => setDragIndex(i)}
+            onDragStart={dragIdx => setDragIndex(dragIdx)}
             onDragOver={e => e.preventDefault()}
-            onDrop={i => { reorderLinks(dragIndex, i); setDragIndex(null) }}
+            onDrop={dropIdx => { reorderLinks(dragIndex, dropIdx); setDragIndex(null) }}
             onUpdate={updateLink}
             onDelete={deleteLink}
           />

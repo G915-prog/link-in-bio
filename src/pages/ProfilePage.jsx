@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useProfile } from '../hooks/useProfile'
-import { supabase } from '../lib/supabase'
+import { useLinks } from '../hooks/useLinks'
 import ProfileHeader from '../components/ProfileHeader'
 import LinkList from '../components/LinkList'
 import QRCode from '../components/QRCode'
@@ -9,9 +9,8 @@ import QRCode from '../components/QRCode'
 function ProfilePage() {
   const { username } = useParams()
   const { profile, loading } = useProfile(username)
+  const { links, loading: linksLoading } = useLinks(profile?.id ?? null, { publishedOnly: true })
 
-  const [links, setLinks] = useState([])
-  const [linksLoading, setLinksLoading] = useState(false)
   const [copyLabel, setCopyLabel] = useState('Share')
 
   function handleShare() {
@@ -26,26 +25,6 @@ function ProfilePage() {
     }
   }
 
-  useEffect(() => {
-    if (!profile) return
-
-    async function fetchLinks() {
-      setLinksLoading(true)
-
-      const { data } = await supabase
-        .from('links')
-        .select('*')
-        .eq('user_id', profile.id)
-        .eq('is_published', true)
-        .order('display_order')
-
-      setLinks(data ?? [])
-      setLinksLoading(false)
-    }
-
-    fetchLinks()
-  }, [profile])
-
   if (loading) return <p className="status-message">Loading profile...</p>
   if (!profile) return <p className="status-message">Profile not found.</p>
 
@@ -57,7 +36,9 @@ function ProfilePage() {
         {copyLabel}
       </button>
 
-      {!linksLoading && <LinkList links={links} />}
+      {!linksLoading && (
+        <LinkList links={links} emptyMessage="No links yet." />
+      )}
 
       <QRCode url={`${window.location.origin}/profile/${profile.username}`} />
     </main>

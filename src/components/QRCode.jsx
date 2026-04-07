@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import QRCodeLib from 'qrcode'
+import { downloadCanvas } from '../lib/download'
 
 function QRCode({ url }) {
   const canvasRef = useRef(null)
@@ -11,19 +12,14 @@ function QRCode({ url }) {
 
   if (!url) return null
 
-  function handleDownload() {
-    const link = document.createElement('a')
-    link.download = 'profile-qr.png'
-    link.href = canvasRef.current.toDataURL('image/png')
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
   return (
     <div className="qrcode">
       <canvas ref={canvasRef} className="qrcode__canvas" aria-label={`QR code for ${url}`} />
-      <button type="button" className="qrcode__download" onClick={handleDownload}>
+      <button
+        type="button"
+        className="qrcode__download"
+        onClick={() => downloadCanvas(canvasRef.current, 'profile-qr.png')}
+      >
         Download PNG
       </button>
     </div>

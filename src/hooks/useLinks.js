@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 
-export function useLinks(userId) {
+export function useLinks(userId, { publishedOnly = false } = {}) {
   const [links, setLinks] = useState([])
   const [loading, setLoading] = useState(!!userId)
   const [error, setError] = useState(null)
@@ -12,11 +12,15 @@ export function useLinks(userId) {
     async function fetchLinks() {
       setLoading(true)
       setError(null)
-      const { data, error: fetchError } = await supabase
+      let query = supabase
         .from('links')
         .select('*')
         .eq('user_id', userId)
         .order('display_order')
+
+      if (publishedOnly) query = query.eq('is_published', true)
+
+      const { data, error: fetchError } = await query
 
       if (fetchError) {
         setError(fetchError.message)
@@ -43,14 +47,17 @@ export function useLinks(userId) {
   }, [userId])
 
   async function addLink({ title, url }) {
-    const tempId = `temp-${Date.now()}`
-    const tempLink = { id: tempId, title, url, user_id: userId, display_order: links.length }
+    const nextOrder = links.length > 0
+      ? Math.max(...links.map(l => l.display_order ?? 0)) + 1
+      : 0
 
+    const tempId = `temp-${Date.now()}`
+    const tempLink = { id: tempId, title, url, user_id: userId, display_order: nextOrder }
     setLinks(prev => [...prev, tempLink])
 
     const { data, error: insertError } = await supabase
       .from('links')
-      .insert({ title, url, user_id: userId, display_order: links.length, is_published: true })
+      .insert({ title, url, user_id: userId, display_order: nextOrder, is_published: true })
       .select()
       .single()
 
