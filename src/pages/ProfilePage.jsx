@@ -37,10 +37,7 @@ function ProfilePage() {
 
   return (
     <main className="profile-page">
-      <ProfileHeader
-        displayName={profile.display_name}
-        bio={profile.bio}
-      />
+      <ProfileHeader profile={profile} />
 
       {!linksLoading && (
         <ul className="links-list">

@@ -4,6 +4,10 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.5.0 — 2026-04-07
+- Built out `ProfileHeader.jsx` — applies theme CSS variables and body background on mount, resets to default on unmount; renders avatar (or placeholder div), display_name, bio
+- Updated `ProfilePage.jsx` — passes full `profile` object to `<ProfileHeader>`
+
 ### 0.4.0 — 2026-04-07
 - Built out `ProfilePage.jsx` — fetches profile by username, fetches published links by `user_id`, loading/not-found states
 - Added placeholder `ProfileHeader.jsx` — renders `display_name` and `bio`
