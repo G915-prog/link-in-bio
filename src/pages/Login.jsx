@@ -17,9 +17,19 @@ function Login() {
 
     console.log('[Login] calling', isSignUp ? 'signUp' : 'signInWithPassword')
 
-    const { data: authData, error: authError } = isSignUp
-      ? await supabase.auth.signUp({ email, password })
-      : await supabase.auth.signInWithPassword({ email, password })
+    let authData, authError
+    try {
+      const result = isSignUp
+        ? await supabase.auth.signUp({ email, password })
+        : await supabase.auth.signInWithPassword({ email, password })
+      authData = result.data
+      authError = result.error
+    } catch (thrown) {
+      console.error('[Login] signIn threw an exception:', thrown)
+      setError('Unexpected error — check console')
+      setLoading(false)
+      return
+    }
 
     console.log('[Login] auth response — error:', authError, '| session:', authData?.session?.access_token ? 'present' : 'absent')
 
