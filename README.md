@@ -4,6 +4,9 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.3.2 — 2026-04-07
+- `ProfilePage.jsx` — seeds a hardcoded test user row into the `profiles` table on mount via direct Supabase upsert
+
 ### 0.3.1 — 2026-04-07
 - `ProfilePage.jsx` — imports `useProfile`, fetches by route username (falls back to `'testuser'`), logs profile to console on fetch
 
