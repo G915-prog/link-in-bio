@@ -4,6 +4,12 @@ A standalone Link-in-Bio app built with React, Vite, and Supabase.
 
 ## Changelog
 
+### 0.6.0 — 2026-04-07
+- Extracted `src/lib/themes.js` — shared THEMES map and DEFAULT_THEME used across the app
+- Added `src/hooks/useTheme.js` — applies theme CSS variables to `:root` and body; resets on unmount
+- Added `src/components/ThemePicker.jsx` — 5 clickable swatches for the dashboard; accepts `value` and `onChange` props
+- Refactored `ProfileHeader.jsx` — removed inline theme logic, now delegates to `useTheme`
+
 ### 0.5.0 — 2026-04-07
 - Built out `ProfileHeader.jsx` — applies theme CSS variables and body background on mount, resets to default on unmount; renders avatar (or placeholder div), display_name, bio
 - Updated `ProfilePage.jsx` — passes full `profile` object to `<ProfileHeader>`
